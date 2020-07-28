@@ -27,4 +27,9 @@ class RootController(BaseController):
     @expose('axantaddressbook.templates.index')
     def index(self):
         """Handle the front-page."""
-        return dict(page='index')
+        contacts = []
+        # contacts.append(dict(name="Antonio", surname="Barile", phone="3923492031"))
+        # contacts.append(dict(name="Serena", surname="Colucci", phone="3460758960"))
+        # contacts.append(dict(name="Lucky", surname="Barile", phone="1234567890"))
+        # contacts.append(dict(name="Clyde", surname="Colucci", phone="0987654321"))
+        return dict(page='index', contacts=contacts)
