@@ -39,6 +39,8 @@ install_requires = [
     "Kajiki >= 0.6.3",
     "zope.sqlalchemy >= 1.2",
     "sqlalchemy",
+    "sqlalchemy-utils",
+    "phonenumbers",
     "alembic",
     "tw2.forms",
     "tgext.admin >= 0.6.1",

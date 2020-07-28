@@ -59,6 +59,6 @@ base_config.update_blueprint({
 try:
     # Enable DebugBar if available, install tgext.debugbar to turn it on
     from tgext.debugbar import enable_debugbar
-    enable_debugbar(base_config)
+    enable_debugbar(False)
 except ImportError:
     pass
