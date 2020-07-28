@@ -1,0 +1,4 @@
+recursive-include axantaddressbook/public *
+include axantaddressbook/public/favicon.ico
+recursive-include axantaddressbook/i18n *
+recursive-include axantaddressbook/templates *

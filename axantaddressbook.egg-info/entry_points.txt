@@ -1,0 +1,6 @@
+[gearbox.plugins]
+turbogears-devtools = tg.devtools
+
+[paste.app_factory]
+main = axantaddressbook.config.application:make_app
+

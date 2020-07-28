@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+"""{{target.capitalize()}} controller module"""
+
+from tg import expose, redirect, validate, flash, url
+# from tg.i18n import ugettext as _
+# from tg import predicates
+
+from axantaddressbook.lib.base import BaseController
+# from axantaddressbook.model import DBSession
+
+
+class {{target.capitalize()}}Controller(BaseController):
+    
+    @expose('axantaddressbook.templates.{{target.lower()}}')
+    def index(self, **kw):
+        return dict(page='{{target.lower()}}-index')
