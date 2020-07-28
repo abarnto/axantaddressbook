@@ -2,3 +2,4 @@
 README.txt
 *.pyc
 *.db
+*.egg-info/
