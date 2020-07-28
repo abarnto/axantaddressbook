@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Error controller"""
-from tg import request, expose
+from tg import request, expose, tmpl_context
 from axantaddressbook.lib.base import BaseController
 
 __all__ = ['ErrorController']
@@ -32,7 +32,11 @@ class ErrorController(BaseController):
             message = ("We're sorry but we weren't able to process "
                        " this request.")
 
-        values = dict(prefix=request.environ.get('SCRIPT_NAME', ''),
-                      code=request.params.get('code', resp.status_int if resp else 400),
-                      message=request.params.get('message', message))
+        tmpl_context.project_name = "Looks like you missed your address book."
+
+        values = dict(
+            tmpl_context = tmpl_context,
+            prefix=request.environ.get('SCRIPT_NAME', ''),
+            code=request.params.get('code', resp.status_int if resp else 400),
+            message=request.params.get('message', message))
         return values

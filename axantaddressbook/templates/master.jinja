@@ -8,6 +8,7 @@
     <title>{% block master_title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" media="screen" href="{{tg.url('/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{{tg.url('/css/style.css')}}" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 
 <body>
@@ -16,12 +17,12 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="{{tg.url('/')}}">
             <img src="{{tg.url('/img/address-book.png')}}" height="40" alt="AxantAddressBook"/>
-            {{tmpl_context.project_name|default('TurboGears2')}}
+            {{tmpl_context.project_name|default('AxantAddressBook')}}
           </a>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container h-100">
         <!-- Flash messages -->
         {% with flash=tg.flash_obj.render('flash', use_js=False) %}
           <div class="row">
@@ -36,8 +37,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer hidden-xs hidden-sm">
-        <p>Made by &copy; {{tmpl_context.author_name|default('Unknown')}} {{h.current_year()}}</p>
+    <footer class="footer hidden-xs hidden-sm pull-right">
+        <p>Made by Antonio Barile</p>
     </footer>
 
     <script src="http://code.jquery.com/jquery.js"></script>
