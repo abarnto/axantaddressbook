@@ -16,7 +16,6 @@ axantaddressbook/config/application.py
 axantaddressbook/controllers/__init__.py
 axantaddressbook/controllers/error.py
 axantaddressbook/controllers/root.py
-axantaddressbook/controllers/secure.py
 axantaddressbook/i18n/ru/LC_MESSAGES/axantaddressbook.po
 axantaddressbook/lib/__init__.py
 axantaddressbook/lib/app_globals.py
@@ -36,6 +35,12 @@ axantaddressbook/public/img/turbogears_logo_big.png
 axantaddressbook/public/img/under_the_hood_blue.png
 axantaddressbook/public/javascript/bootstrap.min.js
 axantaddressbook/templates/__init__.py
+axantaddressbook/templates/error.jinja
+axantaddressbook/templates/index.jinja
+axantaddressbook/templates/login.jinja
+axantaddressbook/templates/master.jinja
+axantaddressbook/templates/master.xhtml
+axantaddressbook/templates/__pycache__/__init__.cpython-36.pyc
 axantaddressbook/tests/__init__.py
 axantaddressbook/tests/functional/__init__.py
 axantaddressbook/tests/functional/test_authentication.py

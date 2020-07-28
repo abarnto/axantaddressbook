@@ -21,7 +21,8 @@ class RootController(BaseController):
     error = ErrorController()
 
     def _before(self, *args, **kw):
-        tmpl_context.project_name = "axantaddressbook"
+        tmpl_context.project_name = "AxantAddressBook"
+        tmpl_context.author_name = "Antonio Barile"
 
     @expose('axantaddressbook.templates.index')
     def index(self):

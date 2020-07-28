@@ -1,2 +1,4 @@
 .vscode/
 README.txt
+*.pyc
+*.db
