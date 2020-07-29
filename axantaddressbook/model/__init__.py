@@ -58,5 +58,6 @@ def init_model(engine):
     return DBSession
 
 # Import your model modules here.
-
 __all__ = ('User', 'Group', 'Permission')
+
+from axantaddressbook.model.contact import Contact
