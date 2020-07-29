@@ -1,5 +1,8 @@
-from axantaddressbook.lib.base import BaseController
 from tg import expose, redirect
+
+from wtforms import Form, StringField, IntegerField, validators
+
+from axantaddressbook.lib.base import BaseController
 from axantaddressbook.model import DBSession
 from axantaddressbook.model.contact import Contact
 from phonenumbers import format_number, PhoneNumberFormat
@@ -16,7 +19,8 @@ class ContactsController(BaseController):
     
     @expose('axantaddressbook.templates.new-contact')
     def new(self):
-        return dict()
+        form = ContactForm(name="Antonio", surname="Barile")
+        return dict(form=form)
 
 
     @expose()
@@ -37,3 +41,8 @@ class ContactsController(BaseController):
     def __getContactWithFormattedPhone(self, contact):
         contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
         return contact
+
+class ContactForm(Form):
+    name = StringField('Nome *', [validators.Required()])
+    surname = StringField('Cognome')
+    phone = IntegerField('N° Telefono *', [validators.Required(), validators.Length(min=9, max=10)])

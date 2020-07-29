@@ -42,7 +42,7 @@ install_requires = [
     "sqlalchemy-utils",
     "phonenumbers",
     "alembic",
-    "tw2.forms",
+    "wtforms",
     "tgext.admin >= 0.6.1",
     "WebHelpers2"
 ]

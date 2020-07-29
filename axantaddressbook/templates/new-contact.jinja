@@ -7,20 +7,20 @@ Nuovo Contatto
 {% block contents %}
 <form action="/contacts/add" method="post">
   <div class="form-group">
-    <label for="name">Nome *</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Scrivi il nome..." required>
+    {{ form.name.label }}
+    {{ form.name(class="form-control") }}
   </div>
   <div class="form-group">
-    <label for="surname">Cognome</label>
-    <input type="text" class="form-control" id="surname" name="surname" placeholder="Scrivi il cognome...">
+    {{ form.surname.label }}
+    {{ form.surname(class="form-control") }}
   </div>
   <div class="form-group">
-    <label for="phone">N° di telefono *</label>
+    {{ form.phone.label }}
     <div class="input-group">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroupPrepend">+39</span>
         </div>
-        <input type="number" class="form-control" id="phone" name="phone" placeholder="Digita il numero..." required>
+        {{ form.phone(class="form-control") }}
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Aggiungi <i class="fa fa-plus" aria-hidden="true"></i></button>
