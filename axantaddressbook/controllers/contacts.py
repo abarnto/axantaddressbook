@@ -27,6 +27,13 @@ class ContactsController(BaseController):
         redirect('/')
 
 
+    @expose('json')
+    def delete(self, **kw):
+        contactId = kw['id']
+        DBSession.query(Contact).filter_by(id=contactId).delete()
+        DBSession.flush()
+        return dict(success=True)
+
     def __getContactWithFormattedPhone(self, contact):
         contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
         return contact

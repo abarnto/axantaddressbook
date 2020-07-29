@@ -1,7 +1,7 @@
 {% extends "master.jinja" %}
 
 {% block master_title %}
-Contacts List
+Lista Contatti
 {% endblock %}
 
 
@@ -11,14 +11,15 @@ Contacts List
       {% if contacts %}
       <ul class="list-group">
         {% for contact in contacts %}
-          <li class="list-group-item d-flex justify-content-between">
+          <li class="list-group-item d-flex justify-content-between" data-id="{{contact.id}}">
             <span>{{ contact.name }} {{ contact.surname }}</span>
             <span>{{ contact.phone }}</span>
+            <button type="button" onclick="deleteContact({{contact.id | safe }})" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
           </li>
         {% endfor %}
       </ul>
       {% else %}
-       <div class="alert alert-info" role="alert">
+      <div class="alert alert-info" role="alert">
         Non ci sono contatti nella rubrica.
       </div>
       {% endif %}
@@ -32,4 +33,24 @@ Contacts List
       <a href="/contacts/new" class="btn btn-primary">Nuovo Contatto <i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
   </div>
+
+  <script>
+    async function deleteContact(contactId) {
+      const deletionConfirmed = confirm('Sei sicuro di voler cancellare questo contatto dalla rubrica?')
+      if (!deletionConfirmed) return
+      try {
+        const response = await fetch(`http://localhost:8080/contacts/delete?id=${contactId}`, { method: 'DELETE' })
+        if ((await response.json()).success) {
+          const disposableListItem = document.querySelector(`li[data-id="${contactId}"]`)
+          const list = disposableListItem.parentNode
+          list.removeChild(disposableListItem)
+          if (list.querySelectorAll('li').length === 0) {
+            window.location.href = '/contacts'
+          }
+        }
+      } catch(err) {
+        console.log('An error happened while trying to delete record: ' + err)
+      }
+    }
+  </script>
 {% endblock %}
