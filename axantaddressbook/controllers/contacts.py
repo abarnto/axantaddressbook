@@ -13,6 +13,19 @@ class ContactsController(BaseController):
         contacts = list(map(self.__getContactWithFormattedPhone, contacts))
         return dict(contacts=contacts)
 
+    
+    @expose('axantaddressbook.templates.new-contact')
+    def new(self):
+        return dict()
+
+
+    @expose()
+    def add(self, **form):
+        contact = Contact(name=form.get('name'), surname=form.get('surname'), phone=form.get('phone'))
+        DBSession.add(contact)
+        DBSession.flush()
+        redirect('/')
+
 
     def __getContactWithFormattedPhone(self, contact):
         contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
