@@ -25,7 +25,14 @@ Nuovo Contatto
   {# SURNAME #}
   <div class="form-group">
     {{ form.surname.label }}
-    {{ form.surname(class="form-control") }}
+    {% if form.surname.errors %}
+      {{ form.surname(class="form-control is-invalid") }}
+      {% for surnameError in form.surname.errors %}
+        <div class="invalid-feedback">{{ surnameError }}</div>
+      {% endfor %}
+    {% else %}
+      {{ form.surname(class="form-control") }}
+    {% endif %}
   </div>
   {# PHONE #}
   <div class="form-group">

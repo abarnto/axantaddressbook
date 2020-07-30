@@ -57,8 +57,8 @@ class ContactsController(BaseController):
 
 
 class ContactForm(Form):
-    name = StringField('Nome *', [validators.DataRequired()])
-    surname = StringField('Cognome')
+    name = StringField('Nome *', [validators.Length(max=30, message="Il nome può avere massimo 30 caratteri"), validators.DataRequired()])
+    surname = StringField('Cognome', [validators.Length(max=30, message="Il cognome può avere massimo 30 caratteri")])
     phone = StringField('N° Telefono *', [validators.Regexp('^[0-9]+$', message="Sono ammessi solo numeri"), validators.Length(min=9, max=10, message="Il N° di telefono deve avere 9 o 10 cifre"), validators.DataRequired()])
 
 
