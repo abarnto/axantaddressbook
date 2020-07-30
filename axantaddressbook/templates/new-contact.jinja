@@ -5,22 +5,43 @@ Nuovo Contatto
 {% endblock %}
 
 {% block contents %}
+
+{% if form.errors %}
+  <div class="alert alert-danger" role="alert">Sono presenti degli errori: correggerli e riprovare.</div>
+{% endif %}
 <form action="/contacts/add" method="post">
+  {# NAME #}
   <div class="form-group">
     {{ form.name.label }}
-    {{ form.name(class="form-control") }}
+    {% if form.name.errors %}
+      {{ form.name(class="form-control is-invalid") }}
+      {% for nameError in form.name.errors %}
+        <div class="invalid-feedback">{{ nameError }}</div>
+      {% endfor %}
+    {% else %}
+      {{ form.name(class="form-control") }}
+    {% endif %}
   </div>
+  {# SURNAME #}
   <div class="form-group">
     {{ form.surname.label }}
     {{ form.surname(class="form-control") }}
   </div>
+  {# PHONE #}
   <div class="form-group">
     {{ form.phone.label }}
     <div class="input-group">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroupPrepend">+39</span>
         </div>
-        {{ form.phone(class="form-control") }}
+        {% if form.phone.errors %}
+          {{ form.phone(class="form-control is-invalid") }}
+          {% for phoneError in form.phone.errors %}
+            <div class="invalid-feedback">{{ phoneError }}</div>
+          {% endfor %}
+        {% else %}
+          {{ form.phone(class="form-control") }}
+        {% endif %}
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Aggiungi <i class="fa fa-plus" aria-hidden="true"></i></button>
