@@ -5,15 +5,18 @@ from wtforms import Form, StringField, IntegerField, validators
 from axantaddressbook.lib.base import BaseController
 from axantaddressbook.model import DBSession
 from axantaddressbook.model.contact import Contact
+
 from phonenumbers import format_number, PhoneNumberFormat
 
+import json
 
 class ContactsController(BaseController):
 
     @expose('axantaddressbook.templates.contacts-list')
     def index(self):
         contacts = DBSession.query(Contact).all()
-        contacts = list(map(self.__getContactWithFormattedPhone, contacts))
+        for contact in contacts:
+            contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
         return dict(contacts=contacts)
 
     
@@ -43,9 +46,15 @@ class ContactsController(BaseController):
         DBSession.flush()
         return dict(success=True)
 
-    def __getContactWithFormattedPhone(self, contact):
-        contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
-        return contact
+    @expose('json')
+    def json(self):
+        saContacts = DBSession.query(Contact).all()
+        dictContacts = [ c.__dict__ for c in saContacts ]
+        for c in dictContacts:
+            c.pop('_sa_instance_state', None)
+            c['phone'] = format_number(c['phone'], PhoneNumberFormat.INTERNATIONAL)
+        return dict(json=json.dumps(dictContacts, indent=4, sort_keys=True))
+
 
 class ContactForm(Form):
     name = StringField('Nome *', [validators.DataRequired()])

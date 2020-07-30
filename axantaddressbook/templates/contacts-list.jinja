@@ -28,12 +28,34 @@ Lista Contatti
   <div class="row">
     <div class="col-md-8 offset-md-2 d-flex justify-content-between">
     {% if contacts %}
-      <button type="button" class="btn btn-primary">Esporta in JSON</button>
+      <button type="button" class="btn btn-primary" onclick="getJSON()">Esporta in JSON</button>
     {% endif %}
       <a href="/contacts/new" class="btn btn-primary">Nuovo Contatto <i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
   </div>
 
+  {# MODAL FOR JSON REPRESENTATION #}
+  <div id="jsonModal" class="modal fade">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Rappresentazione in JSON</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <pre id="jsonOutput"></pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+          <button type="button" id="modal-confirm" class="btn btn-primary" data-dismiss="modal" onclick="downloadJSON()">Scarica</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
   <script>
     async function deleteContact(contactId) {
       const deletionConfirmed = confirm('Sei sicuro di voler cancellare questo contatto dalla rubrica?')
@@ -51,6 +73,23 @@ Lista Contatti
       } catch(err) {
         console.log('An error happened while trying to delete record: ' + err)
       }
+    }
+
+    function getJSON() {
+      fetch(`http://localhost:8080/contacts/json`, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+          $('#jsonModal').modal() // jQuery needed to init Bootstrap modal
+          const pre = document.getElementById('jsonOutput')
+          pre.textContent = data.json
+        })
+        .catch(err => console.log('An error happened while trying to export contacts as JSON: ' + err))
+    }
+
+    function downloadJSON() {
+      const json = document.getElementById('jsonOutput').textContent
+      const jFile = new Blob([json], { type: 'application/json'})
+      saveAs(jFile, `axant-contacts-${ Date.now() }.json`)
     }
   </script>
 {% endblock %}
