@@ -7,17 +7,21 @@ Lista Contatti
 
 {% block contents %}
   <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-12">
       {% if contacts %}
-      <ul class="list-group">
-        {% for contact in contacts %}
-          <li class="list-group-item d-flex justify-content-between" data-id="{{contact.id}}">
-            <span>{{ contact.name }} {{ contact.surname }}</span>
-            <span>{{ contact.phone }}</span>
-            <button type="button" onclick="deleteContact({{contact.id | safe }})" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-          </li>
-        {% endfor %}
-      </ul>
+        <div class="row d-flex justify-content-center">
+          {% for contact in contacts %}
+          <div class="card m-3 col-3" data-id="{{contact.id}}">
+            <div class="card-body d-inline-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="card-title">{{ contact.name }} {{ contact.surname }}</h5>
+                <p class="card-text">{{ contact.phone }}</p>
+              </div>
+              <button type="button" style="height:fit-content" onclick="deleteContact({{contact.id | safe }})" class="btn btn-danger pull-right"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       {% else %}
       <div class="alert alert-info" role="alert">
         Non ci sono contatti nella rubrica.
@@ -25,12 +29,12 @@ Lista Contatti
       {% endif %}
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-8 offset-md-2 d-flex justify-content-between">
-    {% if contacts %}
-      <button type="button" class="btn btn-primary" onclick="getJSON()">Esporta in JSON</button>
-    {% endif %}
+  <div class="row d-flex justify-content-center mt-5">
+    <div class="btn-group-vertical">
       <a href="/contacts/new" class="btn btn-primary">Nuovo Contatto <i class="fa fa-plus" aria-hidden="true"></i></a>
+    {% if contacts %}
+      <button type="button" class="btn btn-outline-success" onclick="getJSON()">Esporta in JSON</button>
+    {% endif %}
     </div>
   </div>
 
@@ -63,10 +67,10 @@ Lista Contatti
       try {
         const response = await fetch(`http://localhost:8080/contacts/delete?id=${contactId}`, { method: 'DELETE' })
         if ((await response.json()).success) {
-          const disposableListItem = document.querySelector(`li[data-id="${contactId}"]`)
+          const disposableListItem = document.querySelector(`.card[data-id="${contactId}"]`)
           const list = disposableListItem.parentNode
           list.removeChild(disposableListItem)
-          if (list.querySelectorAll('li').length === 0) {
+          if (list.querySelectorAll('.card').length === 0) {
             window.location.href = '/contacts'
           }
         }

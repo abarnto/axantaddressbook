@@ -9,20 +9,39 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{tg.url('/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{{tg.url('/css/style.css')}}" />
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+      #page-container {
+        position: relative;
+        min-height: 100vh;
+      }
+
+      #content-wrap {
+        padding-bottom: 10rem
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 10px 20px;
+      }
+    </style>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-default">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="{{tg.url('/')}}">
-            <img src="{{tg.url('/img/address-book.png')}}" height="40" alt="AxantAddressBook"/>
-            {{tmpl_context.project_name|default('AxantAddressBook')}}
-          </a>
-        </div>
-    </nav>
+    <div id="page-container">
+      {# Navbar #}
+      <nav class="navbar navbar-default">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="{{tg.url('/')}}">
+              <img src="{{tg.url('/img/address-book.png')}}" height="40" alt="AxantAddressBook"/>
+              {{tmpl_context.project_name|default('AxantAddressBook')}}
+            </a>
+          </div>
+      </nav>
 
-    <div class="container h-100">
+      {# Content #}
+      <div id="content-wrap" class="container h-100">
         <!-- Flash messages -->
         {% with flash=tg.flash_obj.render('flash', use_js=False) %}
           <div class="row">
@@ -34,12 +53,15 @@
 
         {% block contents %}
         {% endblock %}
+      </div>
+
+      {# Footer #}
+      <footer class="footer text-right">
+          <p><span style="font-size:30px">👨🏻‍💻</span> by Antonio Barile</p>
+          <div><a href="mailto:barileantonio93@gmail.com">barileantonio93@gmail.com</a></div>
+      </footer>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer hidden-xs hidden-sm pull-right">
-        <p><span style="font-size:30px">👨🏻‍💻</span> by Antonio Barile</p>
-    </footer>
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="{{tg.url('/javascript/bootstrap.min.js')}}"></script>
