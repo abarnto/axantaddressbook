@@ -34,7 +34,7 @@ class ContactsController(BaseController):
             contact = Contact(name=form.name.data, surname=form.surname.data, phone=form.phone.data)
             DBSession.add(contact)
             DBSession.flush()
-            redirect('/')
+            redirect('/contacts')
         else:
             return render_template(dict(form=form), 'jinja', 'axantaddressbook.templates.new-contact')
 

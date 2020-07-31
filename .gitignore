@@ -3,3 +3,6 @@ README.txt
 *.pyc
 *.db
 *.egg-info/
+*.eggs/
+requires.txt
+SOURCES.txt
