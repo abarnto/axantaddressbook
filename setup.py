@@ -46,6 +46,10 @@ install_requires = [
     "wtforms",
     "repoze.who",
     "tgext.admin >= 0.6.1",
+    "tgext.pluggable",
+    "tgapp-registration",
+    "tgext.mailer",
+    "tw2.forms",
     "WebHelpers2"
 ]
 
