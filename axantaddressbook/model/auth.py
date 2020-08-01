@@ -1,10 +1,21 @@
 # -*- coding: utf-8 -*-
-"""
-Auth* related model.
+from sqlalchemy.orm import mapper, relation
+from sqlalchemy import Column
+from sqlalchemy.types import Integer, Unicode
+from axantaddressbook.model import DeclarativeBase, metadata, DBSession
 
-This is where the models used by the authentication stack are defined.
+class User(DeclarativeBase):
+    __tablename__ = 'tg_user'
 
-It's perfectly fine to re-use this definition in the axantaddressbook application,
-though.
+    user_id = Column(Integer, autoincrement=True, primary_key=True)
+    user_name = Column(Unicode(16), unique=True, nullable=False)
+    email_address = Column(Unicode(255), unique=True, nullable=False)
+    display_name = Column(Unicode(255))
+    password = Column(Unicode(255), nullable=False)
 
-"""
+class Permission(DeclarativeBase):
+    __tablename__ = 'tg_permission'
+
+    permission_id = Column(Integer, autoincrement=True, primary_key=True)
+    permission_name = Column(Unicode(20), unique=True, nullable=False)
+    description = Column(Unicode(255))

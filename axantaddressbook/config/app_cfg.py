@@ -7,6 +7,9 @@ This file complements development/deployment.ini.
 """
 from tg import FullStackApplicationConfigurator
 
+from tgext.pluggable import plug
+from tgext.pluggable.template_replacements import replace_template
+
 import axantaddressbook
 from axantaddressbook import model, lib
 
@@ -62,3 +65,9 @@ try:
     enable_debugbar(False)
 except ImportError:
     pass
+
+# Configuring tgapp-registration
+plug(base_config, 'registration')
+plug(base_config, 'tgext.mailer')
+replace_template(base_config, 'registration.templates.register', 'axantaddressbook.templates.registration')
+replace_template(base_config, 'registration.templates.complete', 'axantaddressbook.templates.registration-complete')

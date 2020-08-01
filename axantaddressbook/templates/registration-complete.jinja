@@ -1,0 +1,16 @@
+{% extends "master.jinja" %}
+
+{% block master_title %}
+Registrazione Completata
+{% endblock %}
+
+{% block contents %}
+    <div id="registration_complete">
+    <h1>Registrazione Completata!</h1>
+    <p>
+        <h4>La registrazione su <span>AxantAddressBook</span> è avvenuta con successo!</h4>
+        <strong>Una mail</strong> è stata inviata all'indirizzo <strong>{{ email }}</strong> per attivare il tuo account.
+        Clicca sul link in esso contenuto per abilitare il tuo account al login.
+    </p>
+</div>
+{% endblock %}

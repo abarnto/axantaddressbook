@@ -1,0 +1,11 @@
+{% extends "master.jinja" %}
+
+{% block master_title %}
+Registrazione
+{% endblock %}
+
+{% block contents %}
+    <div id="registration_new">
+        {{ form.display(value=value, action=action) }}
+    </div>
+{% endblock %}

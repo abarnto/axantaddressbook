@@ -61,3 +61,5 @@ def init_model(engine):
 __all__ = ('User', 'Group', 'Permission')
 
 from axantaddressbook.model.contact import Contact
+from axantaddressbook.model.auth import User
+from axantaddressbook.model.auth import Permission
