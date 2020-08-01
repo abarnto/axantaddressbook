@@ -44,6 +44,7 @@ install_requires = [
     "phonenumbers",
     "alembic",
     "wtforms",
+    "repoze.who",
     "tgext.admin >= 0.6.1",
     "WebHelpers2"
 ]
