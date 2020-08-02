@@ -1,5 +1,3 @@
-from nose.tools import ok_
-
 from axantaddressbook.tests import TestController
 
 class TestContactsController(TestController):
