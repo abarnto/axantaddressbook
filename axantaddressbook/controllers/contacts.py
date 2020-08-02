@@ -5,6 +5,7 @@ from wtforms import Form, StringField, IntegerField, validators
 from axantaddressbook.lib.base import BaseController
 from axantaddressbook.model import DBSession
 from axantaddressbook.model.contact import Contact
+from axantaddressbook.model.auth import User
 
 from phonenumbers import format_number, PhoneNumberFormat
 
@@ -14,15 +15,16 @@ class ContactsController(BaseController):
 
     @expose('axantaddressbook.templates.contacts-list')
     def index(self):
-        contacts = DBSession.query(Contact).all()
+        identity = request.environ.get('repoze.who.identity')
+        contacts = self.__get_logged_user_contacts()
         for contact in contacts:
             contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
-        identity = request.environ.get('repoze.who.identity')
         return dict(contacts=contacts, identity=identity)
 
     
     @expose('axantaddressbook.templates.new-contact')
     def new(self):
+        self.__get_identity_or_redirect()
         form = ContactForm()
         return dict(form=form)
 
@@ -32,7 +34,8 @@ class ContactsController(BaseController):
         data['phone'].replace(" ", "")
         form = ContactForm(MultiDict(data))
         if form.validate():
-            contact = Contact(name=form.name.data, surname=form.surname.data, phone=form.phone.data)
+            user_id = self.__get_identity_or_redirect()['user'].user_id
+            contact = Contact(name=form.name.data, surname=form.surname.data, phone=form.phone.data, user_id=user_id)
             DBSession.add(contact)
             DBSession.flush()
             redirect('/contacts')
@@ -49,13 +52,27 @@ class ContactsController(BaseController):
 
     @expose('json')
     def json(self):
-        saContacts = DBSession.query(Contact).all()
+        saContacts = self.__get_logged_user_contacts()
         dictContacts = [ c.__dict__ for c in saContacts ]
         for c in dictContacts:
             c.pop('_sa_instance_state', None)
             c['phone'] = format_number(c['phone'], PhoneNumberFormat.INTERNATIONAL)
         return dict(json=json.dumps(dictContacts, indent=4, sort_keys=True))
 
+
+    def __get_logged_user_contacts(self):
+        identity = request.environ.get('repoze.who.identity')
+        if identity:
+            user_id = identity['user'].user_id
+            return DBSession.query(Contact).join(User).filter(User.user_id==user_id).all()
+        else:
+            return []
+
+    def __get_identity_or_redirect(self):
+        identity = request.environ.get('repoze.who.identity')
+        if not identity:
+            redirect('/auth/login')
+        return identity
 
 class ContactForm(Form):
     name = StringField('Nome *', [validators.Length(max=30, message="Il nome può avere massimo 30 caratteri"), validators.DataRequired()])

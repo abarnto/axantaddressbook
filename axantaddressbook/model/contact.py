@@ -1,5 +1,5 @@
 from sqlalchemy.orm import mapper, relation
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, String
 from sqlalchemy_utils.types.phone_number import PhoneNumberType
 
@@ -12,4 +12,5 @@ class Contact(DeclarativeBase):
     name = Column(String(50))
     surname = Column(String(50))
     phone = Column(PhoneNumberType('IT', 10))
+    user_id = Column(Integer, ForeignKey('tg_user.user_id'))
     
