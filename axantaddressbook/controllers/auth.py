@@ -1,6 +1,6 @@
 from axantaddressbook.lib.base import BaseController
 
-from tg import expose, request, lurl
+from tg import expose, request, redirect, lurl
 from tg.flash import flash
 from tg.i18n import ugettext as _
 from tg.exceptions import HTTPFound
@@ -27,7 +27,7 @@ class AuthController(BaseController):
             login_counter = request.environ.get('repoze.who.logins', 0) + 1
             redirect('/auth/login',
                      params=dict(came_from=came_from, __logins=login_counter))
-        userid = request.identity['repoze.who.userid']
+        userid = request.identity['user'].display_name
         flash(_('Bentornato, %s!') % userid)
 
         # Do not use tg.redirect with tg.url as it will add the mountpoint

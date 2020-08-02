@@ -1,4 +1,4 @@
-from tg import expose, redirect, render_template
+from tg import expose, request, redirect, render_template
 
 from wtforms import Form, StringField, IntegerField, validators
 
@@ -17,7 +17,8 @@ class ContactsController(BaseController):
         contacts = DBSession.query(Contact).all()
         for contact in contacts:
             contact.phone = format_number(contact.phone, PhoneNumberFormat.INTERNATIONAL)
-        return dict(contacts=contacts)
+        identity = request.environ.get('repoze.who.identity')
+        return dict(contacts=contacts, identity=identity)
 
     
     @expose('axantaddressbook.templates.new-contact')

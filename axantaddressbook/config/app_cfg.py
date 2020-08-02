@@ -98,12 +98,16 @@ class ApplicationAuthMetadata(TGAuthMetadata):
             environ['repoze.who.application'] = HTTPFound(
                 location=environ['SCRIPT_NAME'] + '?'.join(('/auth/login', urlencode(params, True)))
             )
-
         return login
 
     def get_user(self, identity, userid):
+        """
+        Used to retireve the user given its userid.
+        N.B. If the key is a username, authentication is successfull
+        but no repoze.who.identity env variable is populated!!!
+        """
         return self.dbsession.query(self.user_class).filter_by(
-            user_name=userid
+            email_address=userid
         ).first()
 
     def get_groups(self, identity, userid):
@@ -116,7 +120,9 @@ class ApplicationAuthMetadata(TGAuthMetadata):
 base_config.update_blueprint({
     'auth_backend': 'sqlalchemy',
 
-    'sa_auth.cookie_secret': "4d0e9788-21b1-4315-9a6c-e0d43608c523", # WARN: In production, this has to be changed!!!
+    # WARN: In production, this has to be changed!!!
+    'sa_auth.cookie_secret': "77475ba2-e355-4792-aac8-a9904629c550", # Same as in development.ini? 
+    
     'sa_auth.authmetadata': ApplicationAuthMetadata(model.DBSession, model.User),
 
     # Page where you want users to be redirected to on login:
