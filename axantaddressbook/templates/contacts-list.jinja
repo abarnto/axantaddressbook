@@ -67,6 +67,9 @@ Lista Contatti
 
   <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
   <script>
+    /**
+      Requests a contact deletion to backend, passing contact id
+    */
     async function deleteContact(contactId) {
       const deletionConfirmed = confirm('Sei sicuro di voler cancellare questo contatto dalla rubrica?')
       if (!deletionConfirmed) return
@@ -85,6 +88,9 @@ Lista Contatti
       }
     }
 
+    /**
+      Requests a JSON representation of current contacts to backend
+    */
     function getJSON() {
       fetch(`http://localhost:8080/contacts/json`, { method: 'GET' })
         .then(response => response.json())
@@ -96,6 +102,9 @@ Lista Contatti
         .catch(err => console.log('An error happened while trying to export contacts as JSON: ' + err))
     }
 
+    /**
+      Builds a file using content of element hosting JSON representation retrieved from backend
+    */
     function downloadJSON() {
       const json = document.getElementById('jsonOutput').textContent
       const jFile = new Blob([json], { type: 'application/json'})

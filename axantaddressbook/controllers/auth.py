@@ -6,11 +6,11 @@ from tg.i18n import ugettext as _
 from tg.exceptions import HTTPFound
 
 class AuthController(BaseController):
-    """ Controller managing repoze.who stuff """
+    """ Manages 'repoze.who' stuff """
 
     @expose('axantaddressbook.templates.login')
     def login(self, came_from=lurl('/'), failure=None, login=''):
-        """Start the user login."""
+        """Shows login page"""
         login_counter = request.environ.get('repoze.who.logins', 0)
         if (failure is not None) or (failure is None and login_counter > 0):
             flash(_('Credenziali non corrette. Riprova.'), 'error')
@@ -37,7 +37,7 @@ class AuthController(BaseController):
     @expose()
     def post_logout(self, came_from=lurl('/')):
         """
-        Redirect the user to the initially requested page on logout and say
+        Redirects the user to the initially requested page on logout and say
         goodbye as well.
         """
         flash(_('Arrivederci!'))
